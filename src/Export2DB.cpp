@@ -57,10 +57,10 @@ Export2DB::Export2DB(const  po::variables_map &vm)
         " osm_id bigint,"
         " lon decimal(11,8),"
         " lat decimal(11,8),"
-        " numOfUse int"
+        " numOfUse int,"
 // version & timestamp
-		    ", version int"
-        ", timestamp TIMESTAMP WITHOUT TIME ZONE"
+		    " version int,"
+        " timestamp TIMESTAMP WITHOUT TIME ZONE"
     );
 
         create_vertices =std::string(
@@ -73,9 +73,6 @@ Export2DB::Export2DB(const  po::variables_map &vm)
         " lon decimal(11,8),"
         " lat decimal(11,8),"
         " CONSTRAINT vertex_id UNIQUE(osm_id)"
-// version & timestamp
-        // ", version int"
-        // ", timestamp TIMESTAMP WITHOUT TIME ZONE"
     );
         create_ways =std::string(
 
@@ -103,10 +100,10 @@ Export2DB::Export2DB(const  po::variables_map &vm)
             " osm_id bigint,"
             " source_osm bigint,"
             " target_osm bigint,"
-            " priority double precision DEFAULT 1"
+            " priority double precision DEFAULT 1,"
 // Version & timestamp
-	       		", version int"
-            ", timestamp TIMESTAMP WITHOUT TIME ZONE"
+	       		" version int,"
+            " timestamp TIMESTAMP WITHOUT TIME ZONE"
         );
         create_relations =std::string(
            "relation_id bigint,"
@@ -336,7 +333,6 @@ void Export2DB::exportNodes(const std::map<long long, Node*> &nodes) const {
 
     if (createTempTable( create_nodes, "__nodes_temp" ))
        addTempGeometry( "__nodes_temp", "POINT" );
-//TODO Modify query here
     std::string nodes_columns(" osm_id, lon, lat, numofuse, the_geom, version, timestamp" );   
     std::string copy_nodes( "COPY __nodes_temp (" + nodes_columns + ") FROM STDIN");
     PGresult* q_result = PQexec(mycon, copy_nodes.c_str());
@@ -360,7 +356,6 @@ void Export2DB::exportNodes(const std::map<long long, Node*> &nodes) const {
             row_data += "'" + TO_STR(node->timestamp) + "'";
             row_data += "\n";
             PQputline(mycon, row_data.c_str());
-            // std::cout << row_data.c_str();
         }
         PQputline(mycon, "\\.\n");
         PQendcopy(mycon);

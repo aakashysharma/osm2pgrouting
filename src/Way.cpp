@@ -45,10 +45,9 @@ Way::Way(int64_t id, bool visible, int64_t osm_id, int maxspeed_forward, int max
 	maxspeed_forward(maxspeed_forward),
 	maxspeed_backward(maxspeed_backward),
 	oneWayType(UNKNOWN),
-	osm_id(osm_id)
-	// //TODO Add timestamp information here
-	,version(version)
-	,timestamp(timestamp) 
+	osm_id(osm_id),
+	version(version),
+	timestamp(timestamp) 
 
 	{
 }
@@ -72,15 +71,6 @@ bool Way::HasTag(std::string key)
 {
 	return (m_Tags.count(key)>0);
 }
-
-// void AddVersion( int newVersion){
-// 	// version = newVersion;
-// }
-
-// void AddTimestamp( std::string newTimestamp){
-// 	// timestamp = newTimestamp;
-// }
-
 
 } // end namespace osm2pgr
 

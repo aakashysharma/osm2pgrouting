@@ -53,8 +53,8 @@ class Relation {
     std::string name;
     std::vector<int64_t> m_WayRefs;
     std::map<std::string, std::string> m_Tags;
-    unsigned short version;
-    std::string timestamp;
+    // unsigned short version;
+    // std::string timestamp;
 
  public:
     /** 
@@ -62,7 +62,7 @@ class Relation {
      *    @param id ID of the way
      */
     Relation(int64_t id);
-    Relation(int64_t id, int version, std::string timestamp);
+    // Relation(int64_t id, int version, std::string timestamp);
     //! Destructor
     ~Relation();
     /**
